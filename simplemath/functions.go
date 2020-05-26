@@ -2,7 +2,6 @@ package simplemath
 
 import (
 	"errors"
-	"math"
 )
 
 func Sum(numbers ...float64) float64 {
@@ -25,9 +24,11 @@ func Multiply(p1, p2 float64) float64  {
 	return p1 * p2
 }
 
-func Divide(p1, p2 float64) (float64, error) {
+func Divide(p1, p2 float64) (answer float64, err error) {
 	if p2 == 0 {
-		return math.NaN(), errors.New("cannot divide by zero")
+		err = errors.New("cannot divide by zero")
+	} else {
+		answer = p1 / p2
 	}
-	return p1 / p2, nil
+	return
 }
