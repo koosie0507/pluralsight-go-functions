@@ -13,6 +13,7 @@ func main() {
 	fmt.Printf("%f\n", simplemath.Sum(numbers...))
 
 	sv := semver.NewSemanticVersion(1, 0, 0)
+	sv.IncMajor()
 	fmt.Println(sv.String())
 }
 
