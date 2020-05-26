@@ -22,5 +22,10 @@ func main() {
 	var tripper http.RoundTripper = &pshttp.RoundTripCounter{}
 	r, _ := http.NewRequest(http.MethodGet, "http://pluralsight.com", strings.NewReader("test call"))
 	_, _ = tripper.RoundTrip(r)
+
+	a := func(name string) string {
+		return fmt.Sprintf("anon func %s", name)
+	}
+	fmt.Println(a("1a"))
 }
 
