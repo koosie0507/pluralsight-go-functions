@@ -8,7 +8,17 @@ import (
 
 func main() {
 	ans, _ := divide (1, 0)
-	fmt.Printf("%f", ans)
+	fmt.Printf("%f\n", ans)
+	numbers := []float64{1, 3.14, 2, 6.22, 4.21}
+	fmt.Printf("%f\n", sum(numbers...))
+}
+
+func sum(numbers ...float64) float64 {
+	acc := float64(0)
+	for _, v := range numbers {
+		acc += v
+	}
+	return acc
 }
 
 func add(p1, p2 float64) float64 {
