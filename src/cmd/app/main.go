@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	pshttp "http"
+	"net/http"
 	"semver"
 	"simplemath"
+	"strings"
 )
 
 func main() {
@@ -15,5 +18,9 @@ func main() {
 	sv := semver.NewSemanticVersion(1, 0, 0)
 	sv.IncMajor()
 	fmt.Println(sv.String())
+
+	var tripper http.RoundTripper = &pshttp.RoundTripCounter{}
+	r, _ := http.NewRequest(http.MethodGet, "http://pluralsight.com", strings.NewReader("test call"))
+	_, _ = tripper.RoundTrip(r)
 }
 

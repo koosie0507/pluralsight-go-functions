@@ -14,7 +14,7 @@ func NewSemanticVersion(major, minor, patch int) SemanticVersion {
 	}
 }
 
-func (sv SemanticVersion) String() string {
+func (sv *SemanticVersion) String() string {
 	return fmt.Sprintf("%d.%d.%d", sv.major, sv.minor, sv.patch)
 }
 
