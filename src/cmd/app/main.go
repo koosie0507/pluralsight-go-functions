@@ -54,8 +54,9 @@ func squares() func() int64 {
 	}
 }
 
-func readSomething(reader io.Reader) error {
+func readSomething(reader io.ReadCloser) error {
 	value, err := reader.Read([]byte("test"))
+	defer func() {_ = reader.Close()}()
 	if err == io.EOF {
 		fmt.Println("reached end of file")
 		return err
