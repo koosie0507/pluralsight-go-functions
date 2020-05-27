@@ -79,4 +79,16 @@ func main() {
 		fmt.Print(p2(), " ")
 	}
 	fmt.Println()
+
+	var funcs []func() int64
+	for i:=1; i<=5; i++ {
+		closedI := i
+		funcs = append(funcs, func() int64 {
+			return int64(math.Pow(float64(closedI), 2))
+		})
+	}
+
+	for _, sq := range funcs {
+		fmt.Print(sq(), " ")
+	}
 }
