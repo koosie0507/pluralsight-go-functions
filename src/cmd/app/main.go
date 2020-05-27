@@ -9,6 +9,12 @@ import (
 	"strings"
 )
 
+func mathExpression() func(float64, float64) float64 {
+	return func(p, q float64) float64 {
+		return p + q
+	}
+}
+
 func main() {
 	ans, _ := simplemath.Divide(1, 0)
 	fmt.Printf("%f\n", ans)
@@ -27,5 +33,8 @@ func main() {
 		return fmt.Sprintf("anon func %s", name)
 	}
 	fmt.Println(a("1a"))
+
+	f := mathExpression()
+	fmt.Println(f(1, 2))
 }
 
