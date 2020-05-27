@@ -35,7 +35,7 @@ func NewSimpleReader(maxCount int) io.ReadCloser {
 
 func (sr *SimpleReader) Read(p []byte) (n int, err error) {
 	if sr.count < 1 {
-		return sr.count, io.EOF
+		panic("reading too much")
 	}
 	bytes := sr.count - len(p)
 	bytesRead := len(p)

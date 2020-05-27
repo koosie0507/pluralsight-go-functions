@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	pshttp "http"
 	"io"
@@ -69,14 +70,21 @@ func readSomething(reader io.ReadCloser) error {
 	return nil
 }
 
-func readAll(reader io.ReadCloser) error {
-	defer func() {_ = reader.Close()}()
+func readAll(reader io.ReadCloser) (err error) {
+	defer func() {
+		_ = reader.Close()
+		if p := recover(); p != nil {
+			fmt.Println(p)
+			err = errors.New("it's just a mild case of anxiety, nothing to worry about")
+		}
+	}()
 	for {
-		value, err := reader.Read([]byte("test"))
-		if err == io.EOF {
+		value, readErr := reader.Read([]byte("test"))
+		if readErr == io.EOF {
 			break
-		} else if err != nil {
-			return err
+		} else if readErr != nil {
+			err = readErr
+			return
 		}
 
 		fmt.Println(value)
