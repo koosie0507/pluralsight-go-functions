@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	pshttp "http"
+	"io"
 	"math"
 	"net/http"
+	"readers"
 	"semver"
 	"simplemath"
 	"strings"
@@ -52,6 +54,20 @@ func squares() func() int64 {
 	}
 }
 
+func readSomething(reader io.Reader) error {
+	value, err := reader.Read([]byte("test"))
+	if err == io.EOF {
+		fmt.Println("reached end of file")
+		return err
+	}
+	if err != nil {
+		fmt.Printf("an error occured: %s\n", err.Error())
+		return err
+	}
+	fmt.Println(value)
+	return nil
+}
+
 func main() {
 	ans, _ := simplemath.Divide(1, 0)
 	fmt.Printf("%f\n", ans)
@@ -90,5 +106,13 @@ func main() {
 
 	for _, sq := range funcs {
 		fmt.Print(sq(), " ")
+	}
+	fmt.Println()
+	fmt.Println()
+
+	readSomething(readers.NewBadReader("some error"))
+	simpleReader := readers.NewSimpleReader(6)
+	var err error
+	for ;err != io.EOF; err=readSomething(simpleReader) {
 	}
 }
