@@ -10,6 +10,7 @@ import (
 )
 
 type MathExpression = string
+type MathFunc = func (float64, float64) float64
 
 const (
 	Add MathExpression = "+"
@@ -18,7 +19,7 @@ const (
 	Div MathExpression = "/"
 )
 
-func mathExpression(expr MathExpression) func(float64, float64) float64 {
+func mathExpression(expr MathExpression) MathFunc {
 	switch expr {
 	case Add:
 		return simplemath.Add
@@ -36,6 +37,10 @@ func mathExpression(expr MathExpression) func(float64, float64) float64 {
 			return 0
 		}
 	}
+}
+
+func double(f1, f2 float64, f MathFunc) float64 {
+	return 2 * f(f1, f2)
 }
 
 func main() {
@@ -58,6 +63,6 @@ func main() {
 	fmt.Println(a("1a"))
 
 	f := mathExpression(Sub)
-	fmt.Println(f(1, 2))
+	fmt.Println(double(1, 2, f))
 }
 
