@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	pshttp "http"
+	"math"
 	"net/http"
 	"semver"
 	"simplemath"
@@ -10,7 +11,7 @@ import (
 )
 
 type MathExpression = string
-type MathFunc = func (float64, float64) float64
+type MathFunc = func(float64, float64) float64
 
 const (
 	Add MathExpression = "+"
@@ -43,6 +44,14 @@ func double(f1, f2 float64, f MathFunc) float64 {
 	return 2 * f(f1, f2)
 }
 
+func squares() func() int64 {
+	x := 0.0
+	return func() int64 {
+		x += 1
+		return int64(math.Pow(x, 2))
+	}
+}
+
 func main() {
 	ans, _ := simplemath.Divide(1, 0)
 	fmt.Printf("%f\n", ans)
@@ -64,5 +73,10 @@ func main() {
 
 	f := mathExpression(Sub)
 	fmt.Println(double(1, 2, f))
-}
 
+	p2 := squares()
+	for n := 1; n <= 5; n++ {
+		fmt.Print(p2(), " ")
+	}
+	fmt.Println()
+}
