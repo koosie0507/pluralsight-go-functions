@@ -73,9 +73,11 @@ func readSomething(reader io.ReadCloser) error {
 func readAll(reader io.ReadCloser) (err error) {
 	defer func() {
 		_ = reader.Close()
-		if p := recover(); p != nil {
+		if p := recover(); p == readers.ReadTooMuch {
 			fmt.Println(p)
 			err = errors.New("it's just a mild case of anxiety, nothing to worry about")
+		} else if p != nil {
+			panic("panic attack!")
 		}
 	}()
 	for {

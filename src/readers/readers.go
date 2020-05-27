@@ -33,9 +33,11 @@ func NewSimpleReader(maxCount int) io.ReadCloser {
 	return &SimpleReader{count: maxCount}
 }
 
+var ReadTooMuch = errors.New("read too much")
+
 func (sr *SimpleReader) Read(p []byte) (n int, err error) {
 	if sr.count < 1 {
-		panic("reading too much")
+		panic("something else")
 	}
 	bytes := sr.count - len(p)
 	bytesRead := len(p)
