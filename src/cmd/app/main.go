@@ -10,9 +10,7 @@ import (
 )
 
 func mathExpression() func(float64, float64) float64 {
-	return func(p, q float64) float64 {
-		return p + q
-	}
+	return simplemath.Add
 }
 
 func main() {
