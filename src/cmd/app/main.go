@@ -9,8 +9,33 @@ import (
 	"strings"
 )
 
-func mathExpression() func(float64, float64) float64 {
-	return simplemath.Add
+type MathExpression = string
+
+const (
+	Add MathExpression = "+"
+	Sub MathExpression = "-"
+	Mul MathExpression = "*"
+	Div MathExpression = "/"
+)
+
+func mathExpression(expr MathExpression) func(float64, float64) float64 {
+	switch expr {
+	case Add:
+		return simplemath.Add
+	case Mul:
+		return simplemath.Multiply
+	case Sub:
+		return simplemath.Subtract
+	case Div:
+		return func(a, b float64) float64 {
+			answer, _ := simplemath.Divide(a, b)
+			return answer
+		}
+	default:
+		return func(a, b float64) float64 {
+			return 0
+		}
+	}
 }
 
 func main() {
@@ -32,7 +57,7 @@ func main() {
 	}
 	fmt.Println(a("1a"))
 
-	f := mathExpression()
+	f := mathExpression(Sub)
 	fmt.Println(f(1, 2))
 }
 
